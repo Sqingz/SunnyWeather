@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 30
 
     defaultConfig {
         applicationId "com.example.sunnyweather"
         minSdk 21
-        targetSdk 32
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
@@ -39,11 +39,13 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 
     implementation 'org.litepal.android:core:2.0.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
-    implementation 'com.google.code.gson:gson:2.6.2'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.google.code.com.example.sunnyweather.gson:com.example.sunnyweather.gson:2.6.2'
+
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
 }

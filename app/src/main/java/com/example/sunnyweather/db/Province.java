@@ -1,6 +1,6 @@
-package db;
+package com.example.sunnyweather.db;
 
-import org.litepal.crud.DataSupport;
+
 import org.litepal.crud.LitePalSupport;
 
 public class Province extends LitePalSupport {
@@ -9,6 +9,9 @@ public class Province extends LitePalSupport {
     private String provinceName;
     public int getId(){
         return id;
+    }
+    public void setId(int id){
+        this.id=id;
     }
     public String getProvinceName(){
         return provinceName;
