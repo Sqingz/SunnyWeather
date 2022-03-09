@@ -159,6 +159,9 @@ public class ChooseAreaFragment extends Fragment {
             queryFromServer(address,"city");
         }
     }
+    /*
+    查询选中市内所有的县，优先从数据库查询，如果没有查询再去服务器上查询
+     */
     private void queryCounties(){
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
@@ -182,17 +185,6 @@ public class ChooseAreaFragment extends Fragment {
     private void queryFromServer(String address,final String type){
         showProgressDialog();
         HttpUtil.sendOkHttpRequest(address, new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                // 通过runOnUiTHread()方法回到主线程处理逻辑
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        closeProgressDialog();
-//                        Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
@@ -201,10 +193,12 @@ public class ChooseAreaFragment extends Fragment {
                 if ("province".equals(type)){
                     result= Utility.handleProvinceResponse(responseText);
                 }else if ("city".equals(type)){
-                    result=Utility.handleCityResponse(responseText,selectedProvince.getId());
+                    result=Utility.handleCityResponse(responseText,
+                            selectedProvince.getId());
 
                 }else if ("county".equals(type)){
-                    result=Utility.handleCountyResponse(responseText,selectedCity.getId());
+                    result=Utility.handleCountyResponse(responseText,
+                            selectedCity.getId());
                 }
                 if (result){
                     getActivity().runOnUiThread(new Runnable() {
@@ -224,7 +218,7 @@ public class ChooseAreaFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            public void onFailure( Call call,  IOException e) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
