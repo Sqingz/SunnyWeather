@@ -94,10 +94,19 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }else if (currentLevel==LEVEL_COUNTY){
                     String weatherId=countyList.get(position).getWeatherId();
-                    Intent intent=new Intent(getActivity(),WeatherActivity.class);
-                    intent.putExtra("weather_id",weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if (getActivity()instanceof MainActivity){
+                        Intent intent=new Intent(getActivity(),WeatherActivity.class);
+                        intent.putExtra("weather_id",weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity()instanceof WeatherActivity){
+                        WeatherActivity actuvity=(WeatherActivity) getActivity();
+                        actuvity.drawerLayout.closeDrawers();
+                        actuvity.swipeRefresh.setRefreshing(true);
+                        actuvity.requestWeather(weatherId);
+
+                    }
+
                 }
             }
         });
@@ -178,7 +187,7 @@ public class ChooseAreaFragment extends Fragment {
             int provinceCode=selectedProvince.getProvinceCode();
             int cityCode=selectedCity.getCityCode();
             String address="http://guolin.tech/api/china/"+provinceCode+"/"+cityCode;
-            queryFromServer(address,"County");
+            queryFromServer(address,"county");
         }
     }
     //从服务器上查询数据
